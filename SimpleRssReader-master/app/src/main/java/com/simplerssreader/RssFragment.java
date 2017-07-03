@@ -80,22 +80,6 @@ public class RssFragment extends Fragment implements OnItemClickListener {
                     }
                 }
             });
-
-          /* tts = new TextToSpeech(getContext() , new TextToSpeech.OnInitListener() {
-                @Override
-                public void onInit(int argu) {
-                    if( argu == TextToSpeech.SUCCESS )
-                    {
-                        // 指定的語系: 英文(美國)
-                        Locale language = Locale.US;
-                        // 目前指定的【語系+國家】TTS, 已下載離線語音檔, 可以離線發音
-                        if( tts.isLanguageAvailable( language ) == TextToSpeech.LANG_COUNTRY_AVAILABLE )
-                            tts.setLanguage(language );
-
-                        speakAllTitles();
-                    }
-                }
-            });*/
         }
     }
 
