@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
@@ -19,10 +17,11 @@ public class MainActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     static final int check = 111;
     ListView lv;
+    Bundle savedInstanceState;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.first);
         String t1="1.蘋果日報";
         String t2="2.聯合日報";
         String t3="3.Google新聞";
@@ -37,13 +36,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
+                    String t1="1.蘋果日報";
+                    String t2="2.聯合日報";
+                    String t3="3.Google新聞";
                     textToSpeech.setLanguage(Locale.CHINESE);
+                    textToSpeech.speak(t1, TextToSpeech.QUEUE_ADD, null);
+                    textToSpeech.speak(t2, TextToSpeech.QUEUE_ADD, null);
+                    textToSpeech.speak(t3, TextToSpeech.QUEUE_ADD, null);
                 }
             }
         });
-        textToSpeech.speak(t1, TextToSpeech.QUEUE_ADD, null);
-        textToSpeech.speak(t2, TextToSpeech.QUEUE_ADD, null);
-        textToSpeech.speak(t3, TextToSpeech.QUEUE_ADD, null);
+
        /* if (savedInstanceState != null) {
             addRssFragment();
         }*/
@@ -55,11 +58,14 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String r = results.get(0);
             Toast.makeText(this, r, Toast.LENGTH_LONG).show();
-            if (r.equals("1111")) {
-                addRssFragment();
+            if (r.equals("你好")) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,Main.class);
+                startActivity(intent);
             }
         }
 
+       // super.onCreate(savedInstanceState);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -70,13 +76,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, check);
     }
 
-    private void addRssFragment() {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        RssFragment fragment = new RssFragment();
-        transaction.add(R.id.fragment_container, fragment);
-        transaction.commit();
-    }
+
 
 
 
