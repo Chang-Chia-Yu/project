@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String r = results.get(0);
             Toast.makeText(this, r, Toast.LENGTH_LONG).show();
-            if (r.equals("你好")) {
+            if (r.equals("Google新聞")) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this,Main.class);
                 startActivity(intent);
