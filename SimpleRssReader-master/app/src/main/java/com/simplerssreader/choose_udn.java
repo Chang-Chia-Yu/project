@@ -68,6 +68,7 @@ public class choose_udn extends AppCompatActivity {
                     textToSpeech.speak(t4, TextToSpeech.QUEUE_ADD, null);
                     textToSpeech.speak(t5, TextToSpeech.QUEUE_ADD, null);
                     textToSpeech.speak(t6, TextToSpeech.QUEUE_ADD, null);
+
                 }
             }
         });
