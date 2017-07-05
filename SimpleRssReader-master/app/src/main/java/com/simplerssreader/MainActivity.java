@@ -6,18 +6,21 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static com.simplerssreader.RssFragment.LINK_RES;
+
 public class MainActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
+    public static final String APPLE_LINK = "http://www.appledaily.com.tw/rss/newcreate/kind/rnews/type/new";
+    public static final String UDN_LINK = "https://udn.com/rssfeed/news/2/6638?ch=news";
+    public static final String GOOGLE_LINK = "https://news.google.com.tw/news?cf=all&hl=zh-TW&pz=1&ned=tw&output=rss";
     static final int check = 111;
-    ListView lv;
-    Bundle savedInstanceState;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,26 +49,32 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-       /* if (savedInstanceState != null) {
-            addRssFragment();
-        }*/
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == check && resultCode == RESULT_OK) {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            String r = results.get(0);
-            Toast.makeText(this, r, Toast.LENGTH_LONG).show();
-            if (r.equals("Google新聞")) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this,Main.class);
-                startActivity(intent);
+            String result = results.get(0);
+            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this,Main.class);
+
+            switch (result) {
+                case "聯合日報":
+                    intent.putExtra(LINK_RES, UDN_LINK);
+                    break;
+                case "蘋果日報":
+                    intent.putExtra(LINK_RES, APPLE_LINK);
+                    break;
+                case "Google新聞":
+                    intent.putExtra(LINK_RES, GOOGLE_LINK);
+                    break;
             }
+            startActivity(intent);
         }
 
-       // super.onCreate(savedInstanceState);
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak up, Please!");
         startActivityForResult(i, check);
     }
+
 
 
 

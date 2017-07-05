@@ -13,9 +13,10 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 
+import static com.simplerssreader.RssFragment.LINK_RES;
+
 public class RssService extends IntentService {
 
-    private static final String RSS_LINK = "https://news.google.com.tw/news?cf=all&hl=zh-TW&pz=1&ned=tw&output=rss";
     public static final String ITEMS = "items";
     public static final String ACTION_RSS_PARSED = "com.simplerssreader.ACTION_RSS_PARSED";
 
@@ -23,13 +24,17 @@ public class RssService extends IntentService {
         super("RssService");
     }
 
+
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d(Constants.TAG, "Service started");
+        String link = intent.getStringExtra(LINK_RES);
+        Log.d(Constants.TAG, "Link : " + link);
+
         List<RssItem> rssItems = null;
         try {
             PcWorldRssParser parser = new PcWorldRssParser();
-            rssItems = parser.parse(getInputStream(RSS_LINK));
+            rssItems = parser.parse(getInputStream(link));
         } catch (XmlPullParserException | IOException e) {
             Log.w(e.getMessage(), e);
         }
