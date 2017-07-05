@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
@@ -23,10 +24,31 @@ import java.util.List;
 import java.util.Locale;
 
 public class RssFragment extends Fragment implements OnItemClickListener {
-    List<RssItem> rssItems;
+    public static final String LINK_RES = "LINK";
+    private String link;
+    private List<RssItem> rssItems;
     private ProgressBar progressBar;
     private ListView listView;
     private TextToSpeech tts;
+
+    public static RssFragment getInstance(String link){
+        RssFragment instance = new RssFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(LINK_RES,link);
+        instance.setArguments(bundle);
+        return instance;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null)
+        {
+            link = getArguments().getString(LINK_RES);
+            startService();
+        }
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,14 +58,10 @@ public class RssFragment extends Fragment implements OnItemClickListener {
         listView.setOnItemClickListener(this);
         return view;
     }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        startService();
-    }
 
     private void startService() {
         Intent intent = new Intent(getActivity(), RssService.class);
+        intent.putExtra(LINK_RES,link);
         getActivity().startService(intent);
     }
 
