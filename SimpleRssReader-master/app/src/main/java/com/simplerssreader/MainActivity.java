@@ -6,7 +6,6 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,8 +15,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     static final int check = 111;
-    ListView lv;
-    Bundle savedInstanceState;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak up, Please!");
         startActivityForResult(i, check);
     }
-
+    
 
 
 
