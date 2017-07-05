@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +14,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
+    private TextToSpeech tts;
     static final int check = 111;
 
     @Override
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
-                    String ex="請輕觸螢幕說出想選擇報讀的新聞";
+                    String ex="請在聽完選項後輕觸螢幕說出想選擇報讀的新聞";
                     String t1="1.蘋果日報";
                     String t2="2.聯合日報";
                     String t3="3.Google新聞";
@@ -48,26 +49,63 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == check && resultCode == RESULT_OK) {
             ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            String result = results.get(0);
-            Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+            final String result = results.get(0);
+            Toast.makeText(this, "您的選擇:"+result, Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
-
-
             switch (result) {
                 case "聯合日報":
+                   tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status != TextToSpeech.ERROR) {
+                                tts.setLanguage(Locale.CHINESE);
+                                tts.speak("聯合日報", TextToSpeech.QUEUE_ADD, null);
+                            }
+                        }
+                    });
                     intent.setClass(MainActivity.this,choose_udn.class);
                     break;
                 case "蘋果日報":
+                    tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status != TextToSpeech.ERROR) {
+                                tts.setLanguage(Locale.CHINESE);
+                                tts.speak("蘋果日報", TextToSpeech.QUEUE_ADD, null);
+                            }
+                        }
+                    });
                     intent.setClass(MainActivity.this,choose_apple.class);
                     break;
                 case "Google新聞":
+                    tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status != TextToSpeech.ERROR) {
+                                tts.setLanguage(Locale.CHINESE);
+                                tts.speak("Google新聞", TextToSpeech.QUEUE_ADD, null);
+                            }
+                        }
+                    });
                     intent.setClass(MainActivity.this,choose_google.class);
                     break;
+                default:
+                    tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                        @Override
+                        public void onInit(int status) {
+                            if (status != TextToSpeech.ERROR) {
+                                tts.setLanguage(Locale.CHINESE);
+                                tts.speak("無法辨識您的需求", TextToSpeech.QUEUE_ADD, null);
+                            }
+                        }
+                    });
+                    intent.setClass(MainActivity.this,MainActivity.class);
+                    break;
+
             }
             startActivity(intent);
         }
@@ -75,17 +113,25 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void onClickVoice(View view) {
-        Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak up, Please!");
-        startActivityForResult(i, check);
+    @Override
+    // 利用 MotionEvent 處理觸控程序
+    public boolean onTouchEvent(MotionEvent event) {
+        // 判斷觸控動作
+
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:// 按下
+                    Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak up, Please!");
+                    startActivityForResult(i, check);
+                    break;
+                case MotionEvent.ACTION_MOVE:  // 拖曳移動
+                    break;
+                case MotionEvent.ACTION_UP:  // 放開
+                    break;
+
+        }
+        // TODO Auto-generated method stub
+        return super.onTouchEvent(event);
     }
-    
-
-
-
-
-
-
 }
