@@ -12,13 +12,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.simplerssreader.RssFragment.LINK_RES;
-
 public class MainActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
-    public static final String APPLE_LINK = "http://www.appledaily.com.tw/rss/newcreate/kind/rnews/type/new";
-    public static final String UDN_LINK = "https://udn.com/rssfeed/news/2/6638?ch=news";
-    public static final String GOOGLE_LINK = "https://news.google.com.tw/news?cf=all&hl=zh-TW&pz=1&ned=tw&output=rss";
     static final int check = 111;
 
     @Override
@@ -39,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
+                    String ex="請輕觸螢幕說出想選擇報讀的新聞";
                     String t1="1.蘋果日報";
                     String t2="2.聯合日報";
                     String t3="3.Google新聞";
                     textToSpeech.setLanguage(Locale.CHINESE);
+                    textToSpeech.speak(ex, TextToSpeech.QUEUE_ADD, null);
                     textToSpeech.speak(t1, TextToSpeech.QUEUE_ADD, null);
                     textToSpeech.speak(t2, TextToSpeech.QUEUE_ADD, null);
                     textToSpeech.speak(t3, TextToSpeech.QUEUE_ADD, null);
@@ -59,17 +56,17 @@ public class MainActivity extends AppCompatActivity {
             String result = results.get(0);
             Toast.makeText(this, result, Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
-            intent.setClass(MainActivity.this,Main.class);
+
 
             switch (result) {
                 case "聯合日報":
-                    intent.putExtra(LINK_RES, UDN_LINK);
+                    intent.setClass(MainActivity.this,choose_udn.class);
                     break;
                 case "蘋果日報":
-                    intent.putExtra(LINK_RES, APPLE_LINK);
+                    intent.setClass(MainActivity.this,choose_apple.class);
                     break;
                 case "Google新聞":
-                    intent.putExtra(LINK_RES, GOOGLE_LINK);
+                    intent.setClass(MainActivity.this,choose_google.class);
                     break;
             }
             startActivity(intent);

@@ -20,6 +20,9 @@
             </intent-filter>
         </activity>
         <service android:name=".RssService" />
+        <activity android:label="新聞報讀" android:name=".choose_udn"/>
+        <activity android:label="新聞報讀" android:name=".choose_apple"/>
+        <activity android:label="新聞報讀" android:name=".choose_google"/>
         <activity android:label="新聞報讀" android:name=".Main"/>
     </application>
 
