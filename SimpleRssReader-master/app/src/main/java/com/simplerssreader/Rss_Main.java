@@ -8,11 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import static com.simplerssreader.RssFragment.LINK_RES;
 
 
-public class Main extends AppCompatActivity {
+public class Rss_Main extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.Rss_main);
         if (savedInstanceState == null) {
             addRssFragment();
         }

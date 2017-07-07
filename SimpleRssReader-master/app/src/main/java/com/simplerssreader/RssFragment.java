@@ -52,7 +52,7 @@ public class RssFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_layout, container, false);
+        View view = inflater.inflate(R.layout.Rss_fragment_layout, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         listView = (ListView) view.findViewById(R.id.listView);
         listView.setOnItemClickListener(this);

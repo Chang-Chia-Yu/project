@@ -12,7 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class NewsRssMainActivity extends AppCompatActivity {
     private TextToSpeech textToSpeech;
     private TextToSpeech tts;
     static final int check = 111;
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.first);
+        setContentView(R.layout.Rss_first);
         String t1="1.蘋果日報";
         String t2="2.聯合日報";
         String t3="3.Google新聞";
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv3 = (TextView)this.findViewById(R.id.text3);
         tv3.setText(t3);
 
-        textToSpeech = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+        textToSpeech = new TextToSpeech(NewsRssMainActivity.this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent();
             switch (result) {
                 case "聯合日報":
-                   tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                   tts = new TextToSpeech(NewsRssMainActivity.this, new TextToSpeech.OnInitListener() {
                         @Override
                         public void onInit(int status) {
                             if (status != TextToSpeech.ERROR) {
@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    intent.setClass(MainActivity.this,choose_udn.class);
+                    intent.setClass(NewsRssMainActivity.this,choose_udn.class);
                     break;
                 case "蘋果日報":
-                    tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                    tts = new TextToSpeech(NewsRssMainActivity.this, new TextToSpeech.OnInitListener() {
                         @Override
                         public void onInit(int status) {
                             if (status != TextToSpeech.ERROR) {
@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    intent.setClass(MainActivity.this,choose_apple.class);
+                    intent.setClass(NewsRssMainActivity.this,choose_apple.class);
                     break;
                 case "Google新聞":
-                    tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                    tts = new TextToSpeech(NewsRssMainActivity.this, new TextToSpeech.OnInitListener() {
                         @Override
                         public void onInit(int status) {
                             if (status != TextToSpeech.ERROR) {
@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    intent.setClass(MainActivity.this,choose_google.class);
+                    intent.setClass(NewsRssMainActivity.this,choose_google.class);
                     break;
                 default:
-                    tts = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
+                    tts = new TextToSpeech(NewsRssMainActivity.this, new TextToSpeech.OnInitListener() {
                         @Override
                         public void onInit(int status) {
                             if (status != TextToSpeech.ERROR) {
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-                    intent.setClass(MainActivity.this,MainActivity.class);
+                    intent.setClass(NewsRssMainActivity.this,NewsRssMainActivity.class);
                     break;
 
             }

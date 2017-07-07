@@ -29,7 +29,7 @@ public class choose_udn extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.choose_udn);
+        setContentView(R.layout.Rss_choose_udn);
         String t1="1.焦點新聞";
         String t2="2.體育新聞";
         String t3="3.娛樂新聞";
@@ -82,7 +82,7 @@ public class choose_udn extends AppCompatActivity {
             String result = results.get(0);
             Toast.makeText(this, "您的選擇:"+result, Toast.LENGTH_LONG).show();
             Intent intent = new Intent();
-            intent.setClass(choose_udn.this,Main.class);
+            intent.setClass(choose_udn.this,Rss_Main.class);
 
             switch (result) {
                 case "焦點新聞":
